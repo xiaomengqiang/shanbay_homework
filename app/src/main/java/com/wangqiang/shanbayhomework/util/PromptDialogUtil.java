@@ -33,24 +33,10 @@ public class PromptDialogUtil {
     private Dialog dialog;
     private Context context;
     private int level;
-    private OnClickListener onClickListener;
-    /**
-     * 提示对话框构造函数
-     * @param context         当前上下文
-     * @param onClickListener 提示框按钮点击事件回调监听器
-     */
-    public PromptDialogUtil(Context context, OnClickListener onClickListener) {
-        this.context = context;
-        this.onClickListener = onClickListener;
-        level = 6;
-    }
-
+    private int currentLevel;
     public PromptDialogUtil(Context context) {
         this.context = context;
-    }
-
-    public void setOnClickListener(OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
+        currentLevel = 6;
     }
 
     /**
@@ -125,6 +111,14 @@ public class PromptDialogUtil {
                 dialog.dismiss();
             }
         });
+        Button btnSure = (Button) dialog.findViewById(R.id.btnSure);
+        btnSure.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentLevel = level;
+                dialog.dismiss();
+            }
+        });
         dialog.getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         dialog.show();
@@ -135,7 +129,7 @@ public class PromptDialogUtil {
     }
 
     public int getLevel(){
-        return level;
+        return currentLevel;
     }
 
     public void dismiss() {

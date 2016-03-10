@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".ShanbayApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -11,12 +12,17 @@
         <activity
             android:name="com.wangqiang.shanbayhomework.activity.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:launchMode="singleTask">
+        </activity>
+        <activity
+            android:name="com.wangqiang.shanbayhomework.activity.CatalogActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
         </activity>
         <activity
             android:name="com.wangqiang.shanbayhomework.activity.LauncherActivity"
-            android:label="LauncherActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

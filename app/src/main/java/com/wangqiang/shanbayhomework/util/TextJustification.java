@@ -18,7 +18,7 @@ public class TextJustification {
 	    paraList = paraBreak(text,textView);       
 	    for(int i = 0; i<paraList.size(); i++) {           
 	        ArrayList<String> lineList=lineBreak(paraList.get(i).trim(),paint,contentWidth);           
-	        tempText = TextUtils.join(" ", lineList).replaceFirst("\\s*", "");           
+	        tempText = TextUtils.join(" ", lineList).replaceFirst("\\s*", "");
 	        resultText += tempText.replaceFirst("\\s*", "") + "\n";       
 	    }               
 
@@ -39,9 +39,10 @@ public class TextJustification {
 	    String [] wordArray=text.split("\\s");
 	    ArrayList<String> lineList = new ArrayList<String>();
 	    String myText="";
-
 	    for(String word:wordArray){
-	        if(paint.measureText(myText+" "+word)<=contentWidth)
+			if (myText.equals("")){
+				myText=myText+word;
+			}else if(paint.measureText(myText+" "+word)<=contentWidth)
 	            myText=myText+" "+word;
 	        else{
 	            int totalSpacesToInsert=(int)((contentWidth-paint.measureText(myText))/paint.measureText(" "));
@@ -64,13 +65,16 @@ public class TextJustification {
 	    int i=0;
 	    String justifiedText="";
 	    for(String word:wordArray){
-	        if(i<totalSpacesToInsert)
-	            justifiedText=justifiedText+word+" "+toAppend+" ";
-	        else
-	            justifiedText=justifiedText+word+" "+toAppend;
+				if(i<totalSpacesToInsert)
+					justifiedText=justifiedText+word+" "+toAppend+" ";
+				else
+					justifiedText=justifiedText+word+" "+toAppend;
 	        i++;
 	    }
+		int j ;
+		for (j=justifiedText.length()-1;justifiedText.charAt(j)==' ';j--){
 
-	    return justifiedText;
+		}
+	    return justifiedText.substring(0,j+1);
 	}
 }

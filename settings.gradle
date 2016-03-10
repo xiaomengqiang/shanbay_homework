@@ -1,1 +1,1 @@
-include ':app', ':SeekArc_library', ':justifytext-library'
+include ':app', ':SeekArc_library', ':daogenerator', ':GoogleProgressBarlibrary'
