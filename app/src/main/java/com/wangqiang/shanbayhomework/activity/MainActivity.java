@@ -126,33 +126,36 @@ public class MainActivity extends Activity implements OnClickListener{
         btnChooseLevel.setOnClickListener(this);
     }
 
-    private boolean HighClickWord(TextView v, MotionEvent event,String contentStr) {
+    private boolean HighClickWord(TextView v, MotionEvent event,String contentStr){
         Layout layout = v.getLayout();
         int x = (int) event.getX();
         int y = (int) event.getY();
         if (layout != null) {
-            int line = layout.getLineForVertical(y);
-            int characterOffset = layout.getOffsetForHorizontal(line, x);
-            int temp = characterOffset;
-            SpannableString ss = new SpannableString(contentStr);
-            String str = ss.toString();
-            while (Character.isLetter(str.charAt(characterOffset))) {
-                characterOffset--;
-                if (characterOffset == -1) {
-                    break;
+            try {
+                int line = layout.getLineForVertical(y);
+                int characterOffset = layout.getOffsetForHorizontal(line, x);
+                int temp = characterOffset;
+                SpannableString ss = new SpannableString(contentStr);
+                String str = ss.toString();
+                while (Character.isLetter(str.charAt(characterOffset))) {
+                    characterOffset--;
+                    if (characterOffset == -1) {
+                        break;
+                    }
                 }
+                while (Character.isLetter(str.charAt(temp))) {
+                    temp++;
+                }
+                if (characterOffset == temp) {
+                    Log.e("index", characterOffset + "+" + str.charAt(characterOffset));
+                    return true;
+                }
+                ss.setSpan(new TagImageSpan(0, 0),characterOffset+1, temp,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                v.setText(ss);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            while (Character.isLetter(str.charAt(temp))) {
-                temp++;
-            }
-            if (characterOffset == temp) {
-                Log.e("index", characterOffset + "+" + str.charAt(characterOffset));
-                return true;
-            }
-            ss.setSpan(new TagImageSpan(0, 0),characterOffset+1, temp,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            v.setText(ss);
-            Log.e("index", characterOffset + "+" + str.substring(characterOffset + 1, temp));
         }
         return false;
     }
